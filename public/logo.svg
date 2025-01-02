@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 394 80">
+    <!-- 背景填充 -->
+    <rect width="394" height="80" fill="#fff" />
+    <!-- 显示的文本 -->
+    <text x="50%" y="50%" fill="#000" font-size="40" font-family="Arial, sans-serif" text-anchor="middle" dominant-baseline="middle">
+        Chat·Ai
+    </text>
+</svg>
