@@ -1,12 +1,15 @@
 'use client';
 import Explore from './explore';
+import Tool from './tool';
 import My from './my';
+import { useAppStore } from '@/zustand/store';
 export default function Content() {
-  const tabIndex = 0;
+  const {tabNow} = useAppStore();
   return (
     <>
-      <Explore/>
-      <My/>
+      <Explore isDisplay={tabNow === 'Explore'}/>
+      <Tool isDisplay={tabNow === 'Tool'}/>
+      <My isDisplay={tabNow === 'My'}/>
     </>
   );
 }

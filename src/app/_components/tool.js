@@ -1,5 +1,5 @@
 import Character from "./character";
-export default function My({isDisplay}) {
+export default function Tool({isDisplay}) {
   const display = isDisplay?'flex':'hidden';
   const characters = [
     {
@@ -9,7 +9,7 @@ export default function My({isDisplay}) {
       voice_id: "EXAVITQu4vr4xnSDxMaL",
       author_name: "anonymous author",
       audio_url: "https://storage.googleapis.com/assistly/static/realchar/136cbbd19ed04d599e810050d3585177.mp3",
-      portrait: "http://h.hiphotos.baidu.com/image/pic/item/7c1ed21b0ef41bd5f2c2a9e953da81cb39db3d1d.jpg",
+      portrait: "http://c.hiphotos.baidu.com/image/pic/item/30adcbef76094b36de8a2fe5a1cc7cd98d109d99.jpg",
       tts: "ELEVEN_LABS",
       is_author: true,
       location: "database",

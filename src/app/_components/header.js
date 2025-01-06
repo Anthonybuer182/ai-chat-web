@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import {Navbar, NavbarBrand,  NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
 import SignInModal from "./signin";
 import SignUpModal from "./signup";
+import { useAppStore } from "@/zustand/store";
 export const AcmeLogo = () => {
   return (
     <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
@@ -18,6 +19,7 @@ export const AcmeLogo = () => {
 };
 
 export default function Header() {
+  const {tabNow, setTab, tabs} = useAppStore();
   const [isSignInVisible, setSignInVisible] = useState(false);
   const [isSignUpVisible, setSignUpVisible] = useState(false);
 
@@ -26,7 +28,9 @@ export default function Header() {
 
   const openSignUpModal = () => setSignUpVisible(true);
   const closeSignUpModal = () => setSignUpVisible(false);
-
+  const handleTabClick = (tabNow) => {
+    setTab(tabNow); // 设置当前选中的 tab
+  };
   return (
     <>
       <Navbar>
@@ -35,16 +39,16 @@ export default function Header() {
           <p className="font-bold text-inherit">ACME</p>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem>
-            <Link color="foreground" href="/chat">
-              Explore
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive>
-            <Link aria-current="page" href="#">
-              My
-            </Link>
-          </NavbarItem>
+        {tabs.map((tab, index) => (
+            <NavbarItem key={index}>
+              <Link onPress={() => handleTabClick(tab)} className={`px-10 cursor-pointer ${
+                  tabNow === tab
+                    ? "text-primary"  // 选中时背景为主题色，字体加粗并改为主题色
+                    : "text-foreground"
+                }`}>
+                {tab}
+              </Link >
+          </NavbarItem>))}
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">

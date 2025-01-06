@@ -18,7 +18,7 @@ export default function Explore({isDisplay}) {
     },
   ];
   return (
-    <section className="flex flex-row flex-wrap justify-center items-center gap-5 mt-10">
+    <section className={`flex flex-row flex-wrap justify-center mt-10 gap-5 ${display}`}>
       {characters.map((character) => (
         <div key={character.character_id} className="flex flex-col items-center">
           <Character character={character} />
