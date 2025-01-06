@@ -75,7 +75,7 @@ export default function SignUp({ visible, onClose }) {
               }
               label="Password"
               placeholder="Enter your password"
-              type="password"
+              // type="password"
               variant="bordered"
             />
             <div className="flex py-2 px-1 justify-between">
