@@ -5,9 +5,14 @@ import Footer from "@/app/_components/footer";
 export default function Home() {
   return (
     <>
-    <Header/>
-    <Content/>
-    <Footer/>
-    </>
+    <div className="hidden md:block">
+      <Header />
+    </div>
+    <Content />
+    <div className="block md:hidden">
+      <Footer />
+    </div>
+
+  </>
   );
 }
