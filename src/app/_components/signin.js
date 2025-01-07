@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, Toast } from "@nextui-org/react";
 import { signIn } from "@/api/user";
+import { useAppStore } from "@/zustand/store";
 
 export const MailIcon = (props) => {
   return (
@@ -50,10 +51,12 @@ export default function SignIn({ visible, onClose }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const {token, setToken} = useAppStore();
 
   const handleSignIn = async () => {
     try {
       const result = await signIn(username, password);
+      setToken(result.access_token);
       console.log('Sign in successful:', result);
       onClose();
     } catch (err) {
