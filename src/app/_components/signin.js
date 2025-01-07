@@ -1,14 +1,6 @@
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  Checkbox,
-  Input,
-  Link,
-} from "@nextui-org/react";
+import React, { useState } from "react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, Toast } from "@nextui-org/react";
+import { signIn } from "@/api/user";
 
 export const MailIcon = (props) => {
   return (
@@ -55,6 +47,21 @@ export const LockIcon = (props) => {
 };
 
 export default function SignIn({ visible, onClose }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSignIn = async () => {
+    try {
+      const result = await signIn(username, password);
+      console.log('Sign in successful:', result);
+      onClose();
+    } catch (err) {
+      console.error('Sign in failed:', err);
+      setError('Invalid username or password.');
+    }
+  };
+
   return (
     <Modal isOpen={visible} placement="top-center" onClose={onClose}>
       <ModalContent>
@@ -62,22 +69,29 @@ export default function SignIn({ visible, onClose }) {
           <ModalHeader className="flex flex-col gap-1">Sign in</ModalHeader>
           <ModalBody>
             <Input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               endContent={
                 <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
               }
-              label="Email"
-              placeholder="Enter your email"
+              label="Username"
+              placeholder="Enter your username"
               variant="bordered"
             />
             <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               endContent={
                 <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
               }
               label="Password"
               placeholder="Enter your password"
-              // type="password"
+              type="password"
               variant="bordered"
             />
+            {error && (
+              <div className="text-red-600 mt-2">{error}</div>
+            )}
             <div className="flex py-2 px-1 justify-between">
               <Checkbox
                 classNames={{
@@ -95,7 +109,7 @@ export default function SignIn({ visible, onClose }) {
             <Button color="danger" variant="flat" onPress={onClose}>
               Close
             </Button>
-            <Button color="primary" onPress={onClose}>
+            <Button color="primary" onPress={handleSignIn}>
               Sign in
             </Button>
           </ModalFooter>
