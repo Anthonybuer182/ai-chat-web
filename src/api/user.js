@@ -1,56 +1,23 @@
-import { getApiUrl,getToken } from './url';
-import { StatusCodes } from 'http-status-codes';
+import { fetchData, fetcher } from "./url";
 
 export async function signUp(userRequest) {
-    const response = await fetch(getApiUrl() + '/user/signup', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userRequest),
-    });
-
-    if (response.ok) {
-        return response.json();
-    }
-    throw new Error(response.toString());
+    return fetcher('/user/signup', 'POST', { body: userRequest });
 }
 
 export async function signIn(username, password) {
-    const response = await fetch(getApiUrl() + '/token', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-            grant_type: 'password',
-            username,
-            password,
-        }).toString(),
-    });
+    const body = new URLSearchParams({
+        grant_type: 'password',
+        username,
+        password,
+    }).toString();
 
-    if (response.ok) {
-        return response.json();
-    }
-    throw new Error(response.toString());
+    return fetcher('/token', 'POST', {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+    });
 }
-export async function getUser() {
-    const response = await fetch(getApiUrl() + '/user/get', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Authorization: `Bearer ${getToken()}`,
-        },
-    });
 
-    if (response.ok) {
-        const responseData = await response.json();
-        
-        if (responseData.code === StatusCodes.OK) {
-            return responseData.data;
-        } else {
-            throw new Error(`Error: ${responseData.message}, Code: ${responseData.code}`);
-        }
-    }
-    throw new Error('Network response was not ok');
+export async function getUser() {
+    const data = await fetchData('/user/get', 'GET');
+    return data
 }
