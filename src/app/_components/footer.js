@@ -1,9 +1,7 @@
 'use client'
-import React, { useState } from "react";
-import { MdOutlineExplore } from "react-icons/md";
-import { VscTools } from "react-icons/vsc";
-import { IoPersonOutline } from "react-icons/io5";
+import React from "react";
 import { useAppStore } from "@/zustand/store";
+
 const CustomTab = ({ icon: Icon, label, isActive, onClick }) => {
   return (
     <div
@@ -16,30 +14,25 @@ const CustomTab = ({ icon: Icon, label, isActive, onClick }) => {
   );
 };
 
-
 export default function Footer() {
-  const {tabNow, setTab,tabs} = useAppStore();
+  const { tabNow, setTab, tabs } = useAppStore();
 
   const handleTabClick = (tab) => {
     setTab(tab);
   };
 
-
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="w-full">
-        <div className="flex justify-around">
+      <div className="flex justify-around py-2">
         {Object.entries(tabs).map(([tab, icon]) => (
-            <CustomTab
-              key={tab}
-              icon={icon}
-              label={tab}
-              isActive={tab === tabNow}
-              onClick={() => handleTabClick(tab)}
-            />
-          ))}
-        </div>
-      </div>
+          <CustomTab
+            key={tab}
+            icon={icon}
+            label={tab}
+            isActive={tab === tabNow}
+            onClick={() => handleTabClick(tab)}
+          />
+        ))}
+  
     </div>
   );
 }
