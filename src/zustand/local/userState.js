@@ -1,11 +1,11 @@
-export const createUser = (set,get) => ({
-    username: '',
-    setUsername: (username) => {
-        set({ username: username });
+export const createUser = (set, get) => ({
+    user: {
+        id: '',
+        username: '',
+        portrait: '',
     },
-    userid:'',
-    setUserid: (userid) => {
-        set({ userid: userid });
+    setUser: (user) => {
+        set({ user });
     },
 })
 export const createToken = (set,get) => ({

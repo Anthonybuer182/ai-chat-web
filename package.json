@@ -15,7 +15,8 @@
     "@nextui-org/react": "^2.1.13",
     "framer-motion": "^11.5.6",
     "react-icons": "^4.10.1",
-    "zustand": "^4.4.1"
+    "zustand": "^4.4.1",
+    "http-status-codes": "^2.2.0"
   },
   "devDependencies": {
     "postcss": "^8",

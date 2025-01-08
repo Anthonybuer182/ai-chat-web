@@ -21,33 +21,21 @@ export default function Footer() {
   const {tabNow, setTab,tabs} = useAppStore();
 
   const handleTabClick = (tab) => {
-    setTab(tab.label);
+    setTab(tab);
   };
 
-  const tabIcons = tabs.map((tab) => {
-    switch (tab) {
-      case 'Explore':
-        return { icon: MdOutlineExplore, label: tab };
-      case 'Tool':
-        return { icon: VscTools, label: tab };
-      case 'My':
-        return { icon: IoPersonOutline, label: tab };
-      default:
-        return { icon: null, label: tab };
-    }
-  });
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="w-full">
         <div className="flex justify-around">
-          {tabIcons.map((tabIcon, index) => (
+        {Object.entries(tabs).map(([tab, icon]) => (
             <CustomTab
-              key={index}
-              icon={tabIcon.icon}
-              label={tabIcon.label}
-              isActive={tabIcon.label === tabNow}
-              onClick={() => handleTabClick(tabIcon)}
+              key={tab}
+              icon={icon}
+              label={tab}
+              isActive={tab === tabNow}
+              onClick={() => handleTabClick(tab)}
             />
           ))}
         </div>
