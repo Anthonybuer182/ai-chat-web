@@ -52,7 +52,6 @@ export default function Header() {
         </NavbarContent>
         
         <NavbarContent justify="end">
-          {/* If user is not logged in, show Sign In and Sign Up buttons */}
           {!user.username ? (
             <>
               <NavbarItem className="hidden lg:flex">

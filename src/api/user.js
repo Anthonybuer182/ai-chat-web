@@ -1,6 +1,21 @@
 import { getApiUrl,getToken } from './url';
 import { StatusCodes } from 'http-status-codes';
 
+export async function signUp(userRequest) {
+    const response = await fetch(getApiUrl() + '/user/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userRequest),
+    });
+
+    if (response.ok) {
+        return response.json();
+    }
+    throw new Error(response.toString());
+}
+
 export async function signIn(username, password) {
     const response = await fetch(getApiUrl() + '/token', {
         method: 'POST',

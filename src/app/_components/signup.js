@@ -5,10 +5,10 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Checkbox,
   Input,
-  Link,
 } from "@nextui-org/react";
+import { useState } from "react";
+import { signUp } from "@/api/user";
 
 export const MailIcon = (props) => {
   return (
@@ -55,6 +55,24 @@ export const LockIcon = (props) => {
 };
 
 export default function SignUp({ visible, onClose }) {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSignUp = async () => {
+    const result = await signUp(formData);
+    onClose();
+  };
+
   return (
     <Modal isOpen={visible} placement="top-center" onClose={onClose}>
       <ModalContent>
@@ -62,41 +80,35 @@ export default function SignUp({ visible, onClose }) {
           <ModalHeader className="flex flex-col gap-1">Sign Up</ModalHeader>
           <ModalBody>
             <Input
+              value={formData.username}
+              onChange={handleChange}
+              name="username"
               endContent={
                 <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
               }
-              label="Email"
-              placeholder="Enter your email"
+              label="Username"
+              placeholder="Enter your username"
               variant="bordered"
             />
             <Input
+              value={formData.password}
+              onChange={handleChange}
+              name="password"
               endContent={
                 <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
               }
               label="Password"
               placeholder="Enter your password"
-              // type="password"
+              type="password"
               variant="bordered"
             />
-            <div className="flex py-2 px-1 justify-between">
-              <Checkbox
-                classNames={{
-                  label: "text-small",
-                }}
-              >
-                Remember me
-              </Checkbox>
-              <Link color="primary" href="#" size="sm">
-                Forgot password?
-              </Link>
-            </div>
           </ModalBody>
           <ModalFooter>
             <Button color="danger" variant="flat" onPress={onClose}>
               Close
             </Button>
-            <Button color="primary" onPress={onClose}>
-              Sign in
+            <Button color="primary" onPress={handleSignUp}>
+              Sign up
             </Button>
           </ModalFooter>
         </>
