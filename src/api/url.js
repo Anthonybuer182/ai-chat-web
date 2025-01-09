@@ -10,23 +10,17 @@ import { useAppStore } from "@/zustand/store";
 
 
 import { StatusCodes } from 'http-status-codes';
-async function fetcher(endpoint, method, options = {}) {
-    const { headers, body } = options;
+export async function fetcher(endpoint, method, body) {
     const url = `${getApiUrl()}${endpoint}`;
-    const token = getToken();
 
-    // 如果没有传入 headers，使用默认请求头
-    const finalHeaders = headers || {
-        'Content-Type': 'application/json',
-        ...(token && { Authorization: `Bearer ${token}` }),
-    };
+    const headers =  {'Content-Type': 'application/x-www-form-urlencoded' }
 
     const response = await fetch(url, {
         method,
-        headers: finalHeaders,
-        body: body ? JSON.stringify(body) : undefined,
+        headers: headers,
+        body: body ? new URLSearchParams(body).toString() : undefined,
     });
-
+    
     if (response.ok) {
         return response.json();
     }
@@ -34,10 +28,31 @@ async function fetcher(endpoint, method, options = {}) {
     const errorText = await response.text();
     throw new Error(`Request failed: ${response.status} ${response.statusText}. Details: ${errorText}`);
 }
-async function fetchData(endpoint, method, options = {}) {
-    const response = await fetcher(endpoint, method, options);
-    if (response.code === StatusCodes.OK) {
-        return response.data;
+export async function fetchData(endpoint, method, body) {
+
+    const url = `${getApiUrl()}${endpoint}`;
+    const token = getToken();
+
+    const headers =  {
+        'Content-Type': 'application/json',
+        ...(token && { Authorization: `Bearer ${token}` }),
+    };
+
+    const response = await fetch(url, {
+        method,
+        headers: headers,
+        body: body ? JSON.stringify(body) : undefined,
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Request failed: ${response.status} ${response.statusText}. Details: ${errorText}`);
     }
-    throw new Error(`Error: ${response.message}, Code: ${response.code}`);
+    
+    const responseJson = await response.json();
+    if (responseJson.code !== StatusCodes.OK) {
+        throw new Error(`Error: ${responseJson.message}, Code: ${responseJson.code}`);
+    }
+    
+    return responseJson.data;
 }

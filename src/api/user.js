@@ -1,20 +1,17 @@
 import { fetchData, fetcher } from "./url";
 
 export async function signUp(userRequest) {
-    return fetcher('/user/signup', 'POST', { body: userRequest });
+    return fetchData('/user/signup', 'POST', userRequest);
 }
 
 export async function signIn(username, password) {
-    const body = new URLSearchParams({
-        grant_type: 'password',
-        username,
-        password,
-    }).toString();
-
-    return fetcher('/token', 'POST', {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body,
-    });
+    return fetcher('/token', 'POST', 
+{
+            grant_type: 'password',
+            username,
+            password,
+        },
+    );
 }
 
 export async function getUser() {
