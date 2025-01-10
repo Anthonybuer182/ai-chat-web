@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Character from "./character";
-import { getMyCharacters } from "@/api/character";
+import { getCharacters } from "@/api/character";
 
-export default function My({ isDisplay }) {
+export default function Session({ isDisplay }) {
   const [characters, setCharacters] = useState([]);
   const display = isDisplay ? "flex" : "hidden";
 
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const data = await getMyCharacters({
+        const data = await getCharacters({
           page: 1,
           page_size: 10,
+          "visibility": true
         });
         setCharacters(data.records);
       } catch (error) {

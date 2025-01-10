@@ -19,7 +19,7 @@ export default function Character({ character }) {
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-center mb-2">
             <p className="text-white text-lg font-semibold">{character.name}</p>
-            <IoPlayCircleOutline className="text-white w-7 h-7" onPress={playSound} />
+            <IoPlayCircleOutline className="text-white w-7 h-7" onClick={playSound} />
           </div>
           <p
             className="text-white text-tiny overflow-hidden"

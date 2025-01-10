@@ -30,7 +30,6 @@ export default function Header() {
   const closeSignUpModal = () => setSignUpVisible(false);
   
   const handleTabClick = (tabNow) => {
-    console.error('user', user);
     setTab(tabNow); // 设置当前选中的 tab
   };
 
