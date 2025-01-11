@@ -19,7 +19,7 @@ export const AcmeLogo = () => {
 };
 
 export default function Header() {
-  const { tabNow, setTab, tabs, user, setUser, setToken } = useAppStore();
+  const { tabNow, setTab, tabs, user, clearUser } = useAppStore();
   const [isSignInVisible, setSignInVisible] = useState(false);
   const [isSignUpVisible, setSignUpVisible] = useState(false);
 
@@ -84,8 +84,7 @@ export default function Header() {
                   <DropdownItem key="settings">Settings</DropdownItem>
                   <DropdownItem key="feedback">Feedback</DropdownItem>
                   <DropdownItem key="logout" color="danger" onPress={() => {
-                    setUser({});
-                    setToken('');
+                    clearUser();
                   }}>Log Out</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
