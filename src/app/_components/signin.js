@@ -10,30 +10,8 @@ export default function SignIn({ visible, onClose }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
   const { setToken, setUser } = useAppStore();
-
-  useEffect(() => {
-    try {
-      const savedCredentials = localStorage.getItem('userCredentials');
-      if (savedCredentials) {
-        const { username: savedUsername, rememberMe: savedRememberMe } = JSON.parse(savedCredentials);
-        setUsername(savedUsername);
-        setRememberMe(savedRememberMe);
-      }
-    } catch (err) {
-      console.error('Failed to load saved credentials:', err);
-    }
-  }, []);
-
   const toggleVisibility = () => setIsVisible(!isVisible);
-
-  const handleRememberMe = (checked) => {
-    setRememberMe(checked);
-    if (!checked) {
-      localStorage.removeItem('userCredentials');
-    }
-  };
 
   const handleSignIn = async () => {
     try {
@@ -41,16 +19,6 @@ export default function SignIn({ visible, onClose }) {
       await setToken(result.access_token);
       const user = await getUser();
       setUser(user);
-
-      if (rememberMe) {
-        localStorage.setItem('userCredentials', JSON.stringify({
-          username,
-          rememberMe
-        }));
-      } else {
-        localStorage.removeItem('userCredentials');
-      }
-
       onClose();
     } catch (err) {
       console.error('Sign in failed:', err);
@@ -97,15 +65,6 @@ export default function SignIn({ visible, onClose }) {
               <div className="text-red-600 mt-2">{error}</div>
             )}
             <div className="flex py-2 px-1 justify-between">
-              <Checkbox
-                isSelected={rememberMe}
-                onValueChange={handleRememberMe}
-                classNames={{
-                  label: "text-small",
-                }}
-              >
-                Remember me
-              </Checkbox>
               <Link color="primary" href="#" size="sm">
                 Forgot password?
               </Link>
