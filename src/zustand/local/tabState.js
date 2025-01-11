@@ -1,5 +1,5 @@
 export const createTab = (set,get) => ({
-    tabNow: 'Explore',
+    tabNow: 'My',
     setTab: (tab) => set({ tabNow: tab }),
     tabs: {'Session':BiMessageDetail,'Explore':MdOutlineExplore,'Tool':VscTools,'My':IoPersonOutline},
 })
